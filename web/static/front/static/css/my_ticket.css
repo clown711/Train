@@ -1,0 +1,71 @@
+body{
+    font-family:"微软雅黑";
+}
+.index-side{
+    width: 200px;
+}
+.index-side .lay-hd{
+    text-align: center;
+}
+.index-side .lay-hd span{
+    font-size: 14px;
+    color: #cdcdcd;
+}
+.index-side .lay-bd{
+    padding-top: 30px;
+    padding-bottom: 100px;
+}
+.index-side .lay-bd li{
+    padding: 0 21px;
+    margin-top: 40px;
+    margin-left: 28px;
+
+}
+.index-side .lay-bd a:hover,
+.index-side .lay-bd .active{
+    background: #1678be;
+    color: #fff;
+}
+.index-side .lay-bd li a {
+    display: block;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid #1678be;
+    font-family: "微软雅黑","黑体";
+    font-size: 16px;
+    color: #666;
+    border-radius: 5px 5px;
+}
+.index-right{
+    float: right;
+    width: 760px;
+    margin-top: 20px;
+}
+.t-list .bgc td {
+    padding: 10px 0;
+    cursor: pointer;
+}
+.t-list .bgc strong{
+    font-size: 15px;
+}
+.hidden{
+    display: none;
+}
+.bgc .no-br .btn72{
+    width: 50px;
+}
+.bgc .debook{
+    background: #E6242A;
+}
+.bgc .debook:hover{
+    background: #E63C34;
+}
+
+/*layer 覆盖*/
+.layui-layer-dialog .layui-layer-content,
+.layui-layer-dialog .layui-layer-btn{
+    text-align: center;
+}
+

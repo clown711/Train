@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.x.train.dao.TripsMapper" >
+  <resultMap id="BaseResultMap" type="com.x.train.bean.Trips" >
+    <id column="trips_id" property="tripsId" jdbcType="INTEGER" />
+    <result column="trips_name" property="tripsName" jdbcType="VARCHAR" />
+    <result column="trips_origin" property="tripsOrigin" jdbcType="VARCHAR" />
+    <result column="trips_destination" property="tripsDestination" jdbcType="VARCHAR" />
+    <result column="trips_beginTime" property="tripsBegintime" jdbcType="TIMESTAMP" />
+    <result column="trips_endTime" property="tripsEndtime" jdbcType="TIMESTAMP" />
+    
+    <collection property="tickets" ofType="com.x.train.bean.Ticket">
+        <id column="ticket_id" property="ticketId"/>
+        <result column="ticket_number" property="ticketNumber"/>
+        <result column="ticket_price" property="ticketPrice"/>
+        <result column="ticket_seatType" property="ticketSeattype"/>
+    </collection>
+    
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.x.train.bean.Trips">
+		insert into trips (
+			trips_id,trips_name, 
+		   	trips_origin,trips_destination,
+		   	trips_beginTime,trips_endTime
+	   	)
+	  	values (
+		  	#{tripsId,jdbcType=INTEGER}, #{tripsName,jdbcType=VARCHAR}, 
+		   	#{tripsOrigin,jdbcType=VARCHAR},  #{tripsDestination,jdbcType=VARCHAR},
+		   	#{tripsBegintime,jdbcType=TIMESTAMP},#{tripsEndtime,jdbcType=TIMESTAMP}
+	   	)
+  </insert>
+  
+	<select id="selectTrips" resultMap="BaseResultMap" parameterType="Map">
+		SELECT * FROM  trips 
+		<if test="showNumber != null and startNumber != null ">
+			limit #{startNumber},#{showNumber}
+		</if> 
+	</select>
+	
+	<select id="getTripsCountNumber" resultType="INTEGER">
+	 	SELECT  count(*)   FROM  trips
+	</select>
+	
+	<delete id="deleteTripsById" parameterType="INTEGER">
+	 	delete FROM  trips where trips_id = #{tripsId,jdbcType=INTEGER}
+	</delete>
+	
+	<select id="selectTripsById" resultMap="BaseResultMap" parameterType="INTEGER">
+	 		SELECT * FROM  trips 
+	 	<where>
+	 		trips_id = #{tripsId}
+	 	</where>
+  	</select>
+  	
+  	
+  	<select id="selectTripsBySearchMap" resultMap="BaseResultMap" parameterType="Map">
+	 		SELECT * FROM  trips left join ticket on trips.trips_id = ticket.trips_id
+	 	<where>
+	 		trips.trips_destination = #{tripsDestination} and trips.trips_origin = #{tripsOrigin} and trips.trips_beginTime >= #{tripsBegintime}
+	 	</where>
+  	</select>
+  	
+  	<select id="selectTripsChangeInfo" resultMap="BaseResultMap" parameterType="Map">
+	 		SELECT * FROM  trips left join ticket on trips.trips_id = ticket.trips_id
+		 	<where>
+		 		(
+			 		trips.trips_destination = #{tripsDestination}
+			 		and
+			 		trips.trips_origin = #{tripsOrigin}
+			 		and 
+			 		 trips.trips_beginTime > #{tripsBegintime}
+			 		and
+			 		ticket.ticket_seatType = #{ticketSeattype}
+		 		)
+		 		or
+		 		(
+		 			trips.trips_destination = #{tripsDestination}
+			 		and
+			 		trips.trips_origin = #{tripsOrigin}
+			 		and 
+			 		trips.trips_beginTime &lt; #{tripsBegintime}
+			 		and
+			 		trips.trips_beginTime > now()
+			 		and
+			 		ticket.ticket_seatType = #{ticketSeattype}
+		 		)
+		 		
+		 	</where>
+  	</select>
+  	
+  	
+  	<update id="updateTripsById" parameterType="com.x.train.bean.Trips">
+			update trips 
+			<set>
+			    <if test="tripsName != null">
+			      		trips_name = #{tripsName,jdbcType=VARCHAR},
+			    </if>
+			    <if test="tripsOrigin != null">
+	      				trips_origin = #{tripsOrigin,jdbcType=VARCHAR},
+	      		</if>
+	      		<if test="tripsDestination != null">
+	      				trips_destination = #{tripsDestination,jdbcType=VARCHAR},
+	      		</if>
+	      		<if test="tripsBegintime != null">
+	      				trips_beginTime = #{tripsBegintime,jdbcType=TIMESTAMP},
+	      		</if>
+	      		<if test="tripsEndtime != null">
+	      				trips_endTime = #{tripsEndtime,jdbcType=TIMESTAMP},
+	      		</if>
+			</set>
+			
+		    <where>
+		    		trips_id = #{tripsId,jdbcType=INTEGER}
+		    </where>
+	</update>
+	
+  
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/mvc  
+     	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+     	
+    <!-- 默认的注解映射的支持 -->
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+
+    <!-- 设置静态资源路径 -->
+	<mvc:resources location="static/" mapping="static/**"/>
+    
+    <!-- 对上传文件大小的限制 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="104857600000"/>
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+    
+    <!-- 视图解释类 -->  
+   	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+	    <property name="prefix" value="/WEB-INF/jsp/"/>  
+	    <property name="suffix" value=".jsp"/><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->  
+	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />  
+   	</bean>  
+   	
+    <!-- 该配置使springmvc只扫描controller -->
+    <context:component-scan base-package="com.x.train" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+    <!-- 多个拦截器，顺序执行   -->
+    <!-- 拦截器 --> 
+    <mvc:interceptors>
+        <mvc:interceptor>  
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.x.train.interceptor.AdminLoginInterceptor"></bean>  
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

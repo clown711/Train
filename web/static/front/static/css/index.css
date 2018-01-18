@@ -1,0 +1,128 @@
+/*header*/
+.header{ height:66px; background-position:0 0}
+.header-bd{ width:980px; height:66px; margin:0 auto; position:relative; z-index:3000;}
+.logo{ float:left; width:411px; height:50px; background:url(../imgs/logo.png) 12px 8px no-repeat; padding:8px 0 0 12px; text-indent:-9999px; }
+.login-info{ height:30px; line-height:30px; float:right; padding-right:5px; margin-bottom:2px;}
+.login-info a{color:#666; }
+.login-info .colorA{ color:#FB7403}
+.login-info .login-txt{ color: #666666; float:right}
+.login-info .login-txt a{margin:0 2px;}
+.login-info .login-txt a:hover{color:#FB7403}
+/*nav*/
+.nav{ width:420px; height:34px; padding:0px 0 0 63px;background:url(../imgs/bg_nav.png) right top no-repeat; float:right; position:relative; }
+.nav li{ float:left; width:65px; height:30px; text-align:center; margin-left:40px; margin-top:4px}
+.nav li a{ display:block; height:28px; line-height:28px; color:#fff; font-size:14px; text-align:center}
+.nav li .current{background:url(../imgs/bg_nav01.png) no-repeat; color:#478DCD; font-weight:700;}
+.nav li .current:hover{color:#478DCD;}
+
+/*index-side start*/
+.index-side {
+    width: 350px;
+    padding-top: 20px;
+    float: left;
+}
+
+/*带标题模块*/
+.layout{
+    border:1px solid #1678BE;
+    border-radius:5px 5px 0 0; -moz-border-radius:5px 5px 0 0;
+    background-position:0 -400px;
+}
+.layout .lay-hd{
+    height:32px;
+    line-height:30px;
+    color:#E5F8FF;
+    padding-left:20px;
+    font-size:14px;
+    position:relative
+}
+.layout .lay-bd{
+    background:#EEF1F8;
+    border-top:none;
+}
+
+.booking{
+    width:348px;
+    margin-bottom:5px;
+}
+.booking-in{
+    width:308px;
+    margin:0 auto;
+    padding-top: 40px;
+}
+.booking-hd{
+    height:20px;
+    line-height:20px;
+    border-bottom:1px solid #5fb0dc;
+    padding:5px 0 5px 18px
+}
+.booking-bd{
+    position:relative;
+    padding-bottom: 40px;
+}
+.booking-bd ul{
+    margin:2px 0 0 0;
+    margin-bottom: 20px;
+}
+.booking-bd li{
+    margin-bottom: 20px;
+    height:30px;
+    line-height:30px;
+    float:left;
+    white-space:nowrap;
+    padding:2px 0
+}
+.booking-bd li .inp-w{
+    position:relative;
+    width:200px;
+    height:30px;
+    float:left
+}
+.booking-bd li .inp-w input{
+    float:left
+}
+.booking-bd .label{
+    display:block;
+    padding-right:25px;
+    width:60px;
+    text-align:right;
+    float:left;
+    height:30px;
+    line-height:30px;
+    overflow:hidden
+}
+
+/*index-side end*/
+
+/*轮播*/
+.banner { position: relative; overflow: auto; text-align: center;
+    float: right;}
+.banner li { list-style: none; }
+.banner ul li { float: left; }
+#b04 { width: 600px; margin-top: 21px;}
+#b04 .dots { position: absolute; left: 0; right: 0; bottom: 10px;}
+#b04 .dots li
+{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    text-indent: -999em;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: .5;
+    transition: background .5s, opacity .5s;
+}
+#b04 .dots li.active
+{
+    background: #fff;
+    opacity: 1;
+}
+#content .error{
+    font-family:"微软雅黑";
+    text-align: center;
+    font-size: 16px;
+    padding-left: 0px;
+    color: red;
+}

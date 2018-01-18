@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.x.train.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.x.train.bean.Order" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="trips_id" property="tripsId" jdbcType="INTEGER" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+    <result column="order_quantity" property="orderQuantity" jdbcType="INTEGER" />
+    <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+    <result column="ticket_seatType" property="ticketSeattype" jdbcType="VARCHAR" />
+    <association property="trips" javaType="com.x.train.bean.Trips">
+		    <id column="trips_id" property="tripsId" jdbcType="INTEGER" />
+		    <result column="trips_name" property="tripsName" jdbcType="VARCHAR" />
+		    <result column="trips_origin" property="tripsOrigin" jdbcType="VARCHAR" />
+		    <result column="trips_destination" property="tripsDestination" jdbcType="VARCHAR" />
+			<result column="trips_beginTime" property="tripsBegintime" jdbcType="TIMESTAMP" />
+			<result column="trips_endTime" property="tripsEndtime" jdbcType="TIMESTAMP" />
+	</association>
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.x.train.bean.Order">
+		insert into `order` (
+			`order_id`,`order_number`, 
+		   	`user_id`,`trips_id`,
+		   	`order_status`,`order_quantity`,
+		   	`order_price`,ticket_seatType
+	   	)
+	  	values (
+		  	#{orderId,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, 
+		   	#{userId,jdbcType=INTEGER},  #{tripsId,jdbcType=INTEGER},
+		   	#{orderStatus,jdbcType=VARCHAR},#{orderQuantity,jdbcType=INTEGER},
+		   	#{orderPrice,jdbcType=DECIMAL},#{ticketSeattype,jdbcType=VARCHAR}
+	   	)
+  </insert>
+  
+  <select id="selectOrder" resultMap="BaseResultMap" parameterType="Map">
+	 	SELECT * FROM  `order` ,trips 
+	 	<where>
+	 	order.trips_id = trips.trips_id
+	 	</where>
+	 	<if test="showNumber != null and startNumber != null ">
+	 		limit #{startNumber},#{showNumber}
+	 	</if> 
+  </select>
+  
+  <select id="selectOrderByUserId" resultMap="BaseResultMap" parameterType="INTEGER">
+	 	SELECT * FROM  `order` , trips 
+	 	<where>
+	 		user_id = #{userId,jdbcType=INTEGER}
+	 		and
+	 		order.trips_id = trips.trips_id
+	 	</where>
+  </select>
+  
+  <select id="selectOrderByOrderId" resultMap="BaseResultMap" parameterType="INTEGER">
+	 	SELECT * FROM  `order` , trips 
+	 	<where>
+	 		order_id = #{orderId,jdbcType=INTEGER}
+	 		and
+	 		order.trips_id = trips.trips_id
+	 	</where>
+  </select>
+  
+  <delete id="deleteOrderById" parameterType="INTEGER">
+ 		delete FROM  `order` where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  
+  
+  <update id="updateOrderById" parameterType="com.x.train.bean.Order">
+			update `order`
+			<set>
+			 	<if test=" tripsId != null ">
+		      		trips_id = #{tripsId,jdbcType=INTEGER},
+		    	</if>
+		    	<if test=" orderStatus != null ">
+		      		order_status = #{orderStatus,jdbcType=VARCHAR},
+		    	</if>
+			</set>
+		    <where>
+		    		`order_id` = #{orderId,jdbcType=INTEGER}
+		    </where>
+	</update>
+  
+  
+</mapper>

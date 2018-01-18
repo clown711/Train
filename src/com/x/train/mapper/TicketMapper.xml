@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.x.train.dao.TicketMapper" >
+  <resultMap id="BaseResultMap" type="com.x.train.bean.Ticket" >
+    <id column="ticket_id" property="ticketId" jdbcType="INTEGER" />
+    <result column="trips_id" property="tripsId" jdbcType="INTEGER" />
+    <result column="ticket_number" property="ticketNumber" jdbcType="INTEGER" />
+    <result column="ticket_price" property="ticketPrice" jdbcType="DECIMAL" />
+    <result column="ticket_seatType" property="ticketSeattype" jdbcType="VARCHAR" />
+    <association property="trips" javaType="com.x.train.bean.Trips">
+		    <id column="trips_id" property="tripsId" jdbcType="INTEGER" />
+		    <result column="trips_name" property="tripsName" jdbcType="VARCHAR" />
+		    <result column="trips_origin" property="tripsOrigin" jdbcType="VARCHAR" />
+		    <result column="trips_destination" property="tripsDestination" jdbcType="VARCHAR" />
+			<result column="trips_beginTime" property="tripsBegintime" jdbcType="TIMESTAMP" />
+			<result column="trips_endTime" property="tripsEndtime" jdbcType="TIMESTAMP" />
+	</association>
+  </resultMap>
+ 
+ 
+  <insert id="insert" parameterType="com.x.train.bean.Ticket">
+		insert into ticket (
+			ticket_id,trips_id, 
+		   	ticket_number,ticket_price,
+		   	ticket_seatType
+	   	)
+	  	values (
+		  	#{ticketId,jdbcType=INTEGER}, #{tripsId,jdbcType=INTEGER}, 
+		   	#{ticketNumber,jdbcType=INTEGER},  #{ticketPrice,jdbcType=DECIMAL},
+		   	#{ticketSeattype,jdbcType=VARCHAR}
+	   	)
+  </insert>
+  
+	<select id="selectTicket" resultMap="BaseResultMap" parameterType="Map">
+		SELECT * FROM  ticket , trips
+		<where>
+			ticket.trips_id = trips.trips_id
+		</where>
+		<if test="showNumber != null and startNumber != null ">
+			limit #{startNumber},#{showNumber}
+		</if> 
+	</select>
+	
+	<select id="getTicketCountNumber" resultType="INTEGER">
+	 	SELECT  count(*)   FROM  ticket
+	</select>
+	
+	<select id="selectTicketByTripsIdAndType" resultMap="BaseResultMap" parameterType="Map">
+	 	SELECT * FROM  ticket
+	 	<where>
+	 		ticket.ticket_seatType = #{ticketSeattype} and ticket.trips_id = #{tripsId}
+	 	</where> 
+	</select>
+	
+	<delete id="deleteTicketById" parameterType="INTEGER">
+	 	delete FROM  ticket where ticket_id = #{ticketId,jdbcType=INTEGER}
+	</delete>
+	
+	<select id="selectTicketById" resultMap="BaseResultMap" parameterType="INTEGER">
+	 		SELECT * FROM  ticket 
+	 	<where>
+	 		ticket_id = #{ticketId}
+	 	</where>
+ 	
+  	</select>
+  	
+  	
+  	<update id="updateTicketById" parameterType="com.x.train.bean.Ticket">
+			update ticket 
+			<set>
+			    <if test="ticketSeattype != null">
+	      				ticket_seatType = #{ticketSeattype,jdbcType=VARCHAR},
+	      		</if>
+	      		<if test="tripsId != null">
+	      				trips_id = #{tripsId,jdbcType=INTEGER},
+	      		</if>
+	      		<if test="ticketNumber != null">
+	      				ticket_number = #{ticketNumber,jdbcType=INTEGER},
+	      		</if>
+	      		<if test="ticketPrice != null">
+	      				ticket_price = #{ticketPrice,jdbcType=DECIMAL},
+	      		</if>
+			</set>
+			
+		    <where>
+		    		ticket_id = #{ticketId,jdbcType=INTEGER}
+		    </where>
+	</update>
+	
+ 
+ 
+</mapper>

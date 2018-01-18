@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.x.train.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.x.train.bean.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+    <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <insert id="insert" parameterType="com.x.train.bean.User">
+		insert into user (
+			user_id, user_nickname,
+			user_account, user_password
+	   	)
+	  	values (
+	  		#{userId,jdbcType=INTEGER}, #{userNickname,jdbcType=VARCHAR}, 
+	  		#{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}
+	   	)
+	</insert>
+	
+	<select id="selectUserByUsername" resultMap="BaseResultMap">
+	 	SELECT * FROM  user 
+	 	<where>
+	 		user.user_account = #{userAccount,jdbcType=VARCHAR}
+	 	</where> 
+	</select>
+	
+	<select id="selectUser" resultMap="BaseResultMap" parameterType="Map">
+	 	SELECT * FROM  user 
+	 	 <if test="showNumber != null and startNumber != null ">
+	 		limit #{startNumber},#{showNumber}
+	 	</if> 
+	</select>
+	
+	<select id="getUserCountNumber" resultType="INTEGER">
+	 	SELECT  count(*)   FROM  user
+	</select>
+	
+	<delete id="deleteUserById" parameterType="INTEGER">
+	 	delete FROM  user where user_id = #{userId,jdbcType=INTEGER}
+	</delete>
+ 
+</mapper>
