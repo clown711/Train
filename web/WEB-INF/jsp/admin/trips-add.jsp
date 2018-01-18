@@ -144,11 +144,11 @@ $(function () {
 		$.ajax({
 			
 			<c:if test="${requestScope.trips==null}">
-			url: "/admin/adminTripsAdd",
+			url: "<%=basePath%>admin/adminTripsAdd",
 			</c:if>
 			
 			<c:if test="${requestScope.trips!=null}">
-			url: "/admin/adminTripsEdit",
+			url: "<%=basePath%>admin/adminTripsEdit",
 			</c:if>
 			
 	        type: "POST",

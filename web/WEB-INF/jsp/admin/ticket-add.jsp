@@ -107,7 +107,7 @@ $(function () {
 	
 	function getTrips(){
 		$.ajax({
-			url: "admin/adminTripsSelect",
+			url: "<%=basePath%>admin/adminTripsSelect",
 	        type: "POST",
 	        data:{"flag":"ticket_add"},
 	        dataType: "json",
@@ -139,11 +139,11 @@ $(function () {
 		}
 		$.ajax({
 			<c:if test="${requestScope.ticket==null}">
-			url: "/admin/adminTicketAdd",
+			url: "<%=basePath%>admin/adminTicketAdd",
 			</c:if>
 			
 			<c:if test="${requestScope.ticket!=null}">
-			url: "/admin/adminTicketEdit",
+			url: "<%=basePath%>admin/adminTicketEdit",
 			</c:if>
 			
 	        type: "POST",

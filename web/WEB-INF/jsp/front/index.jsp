@@ -41,7 +41,7 @@
              <div class="nav">
                 <ul>
                     <li>
-                        <a href="/front" class="current">首页</a>
+                        <a href="<%=basePath%>front" class="current">首页</a>
                     </li>
                     <c:if test="${sessionScope.user != null}">
 	                    <li>

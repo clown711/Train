@@ -108,7 +108,7 @@ $(function () {
 	}, function(){
 		 layer.close(layerId);
 		 $.ajax({
-		        url:"/admin/adminUserDelete",
+		        url:"<%=basePath%>admin/adminUserDelete",
 		        type: "POST",
 		        dataType: "json",
 		        async: false, 

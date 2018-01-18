@@ -1,4 +1,4 @@
-*.jar
+web/WEB-INF/lib
 /out/
 *.idea
 *.iml
