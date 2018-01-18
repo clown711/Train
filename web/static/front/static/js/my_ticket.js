@@ -23,7 +23,6 @@
     function gaiqian(dom, basePath) {
     	var orderId = $(dom).parent().children("[name='orderId']").val();
     	var ticketSeattype = $(dom).parent().children("[name='ticketSeattype']").val();
-    	alert(basePath+'user/toUserOrderChange?orderId='+orderId+'&ticketSeattype='+ticketSeattype);
     	layer.open({
     		  type: 2,
     		  title: '改签',

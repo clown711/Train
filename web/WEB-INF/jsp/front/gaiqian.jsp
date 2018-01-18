@@ -53,7 +53,7 @@
 			 return fasle;
 		 }
 		 $.ajax({
-  			url: "/user/userOrderChange",
+  			url: "<%=basePath%>user/userOrderChange",
   	        type: "POST",
   	        dataType: "json",
   	        async: false,
